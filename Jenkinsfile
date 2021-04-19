@@ -27,10 +27,12 @@ pipeline {
           echo 'Testing'    
       }
     }
-    steps {
-      build job: 'go-hiking-web-delpoy-build', parameters: [
-          string(name: 'go-hiking-web-delpoy', value: env.NAME)
-      ], wait: false
+    stage('Build Job') {
+      steps {
+        build job: 'go-hiking-web-delpoy-build', parameters: [
+            string(name: 'go-hiking-web-delpoy', value: env.NAME)
+        ], wait: false
+      }
     }
   }    
   post {
