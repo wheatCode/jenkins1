@@ -19,26 +19,18 @@ pipeline {
       sh 'npm install'
       sh 'CI="" npm run build'
       sh 'ls -al'
+      zip zipFile: 'fontend.zip', archive: true, dir: '/app'
     }
   }
   stage('Test') {
     steps {
-        echo 'Testing'
+        echo 'Testing'    
     }
   }
-  stage('Deploy') {
-    steps {
-        sshagent (credentials: ['100-monosparta-loadbalancer']) {
-          sh "scp -r build deploy@10.2.9.110:~/"
-          sh """
-          ssh -o StrictHostKeyChecking=no -T deploy@10.2.9.110  << EOF
-          echo deploy | sudo -S mv ~/build/**.* /var/www/gohiking-web
-          exit
-          """
-          zip zipFile: 'fontend.zip', archive: true, dir: '/app'
-        }
-      }
-    }
+  steps {
+    build job: 'go-hiking-web-delpoy-build', parameters: [
+        string(name: 'go-hiking-web-delpoy', value: env.NAME)
+    ], wait: false
   }    
   post {
       always {
