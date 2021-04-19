@@ -7,7 +7,6 @@ pipeline {
   environment {
       npm_config_cache = 'npm-cache'
   }
-  stages { 
   stage("Version") {
     steps {
       sh 'node --version'
