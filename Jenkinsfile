@@ -35,6 +35,7 @@ pipeline {
           echo deploy | sudo -S mv ~/build/**.* /var/www/gohiking-web
           exit
           """
+          zip zipFile: 'fontend.zip', archive: true, dir: '/app'
         }
       }
     }
