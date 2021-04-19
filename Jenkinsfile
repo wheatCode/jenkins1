@@ -19,7 +19,7 @@ pipeline {
         sh 'npm install'
         sh 'CI="" npm run build'
         sh 'ls -al'
-        zip zipFile: 'fontend.zip', archive: true, dir: '/app'
+        zip zipFile: 'fontend.zip', archive: true, dir: '/'
       }
     }
     stage('Test') {
